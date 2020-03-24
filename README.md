@@ -1,4 +1,7 @@
-# first-pwa
+# ad-pwa
+```
+vue + vuetify + firebase
+```
 
 ## Project setup
 ```
