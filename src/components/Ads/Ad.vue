@@ -14,17 +14,11 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <app-edit-modal
-              :ad="ad"
-              v-if="isOwner"
-            ></app-edit-modal>
-            <v-btn class="success">Buy</v-btn>
+            <app-edit-modal :ad="ad" v-if="isOwner"></app-edit-modal>
+            <app-buy-modal :ad="ad" v-if="!isOwner"></app-buy-modal>
           </v-card-actions>
         </v-card>
-        <v-col
-          v-else
-          class="d-flex justify-center align-center preloader"
-        >
+        <v-col v-else class="d-flex justify-center align-center preloader">
           <v-progress-circular
             :size="50"
             color="primary"
@@ -38,6 +32,7 @@
 
 <script>
 import editAdModal from './EditAdModal'
+import BuyModal from '../Shared/BuyModal'
 
 export default {
   name: 'Ad',
@@ -55,16 +50,17 @@ export default {
     }
   },
   components: {
-    appEditModal: editAdModal
+    appEditModal: editAdModal,
+    appBuyModal: BuyModal
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .preloader {
-    height: calc(100vh - 56px - 24px);
-    @media (min-width: 959px) {
-      height: calc(100vh - 64px - 24px);
-    }
+.preloader {
+  height: calc(100vh - 56px - 24px);
+  @media (min-width: 959px) {
+    height: calc(100vh - 64px - 24px);
   }
+}
 </style>

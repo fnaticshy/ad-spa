@@ -46,9 +46,11 @@
                 <v-btn
                   :to="`/ad/${ad.id}`"
                 >Open</v-btn>
-                <v-btn class="primary">
-                  Buy
-                </v-btn>
+                <!--v-if="ad.ownerId !== ownerId"-->
+                <app-buy-modal
+                  :ad="ad"
+                >
+                </app-buy-modal>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -72,6 +74,8 @@
 </template>
 
 <script>
+import BuyModal from './Shared/BuyModal'
+
 export default {
   name: 'Home',
   computed: {
@@ -85,9 +89,8 @@ export default {
       return this.$store.getters.ads
     }
   },
-  data () {
-    return {
-    }
+  components: {
+    appBuyModal: BuyModal
   }
 }
 </script>
