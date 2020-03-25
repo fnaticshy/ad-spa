@@ -8,6 +8,10 @@ import * as fb from 'firebase'
 
 Vue.config.productionTip = false
 
+// global components
+import BuyModal from './components/Shared/BuyModal'
+Vue.component(BuyModal)
+
 new Vue({
   router,
   store,

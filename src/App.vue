@@ -1,6 +1,10 @@
 <template>
   <v-app>
-    <v-navigation-drawer app temporary v-model="drawer">
+    <v-navigation-drawer
+      app
+      temporary
+      v-model="drawer"
+    >
       <v-list>
         <v-list-item
           :to="link.url"
@@ -103,6 +107,9 @@
 export default {
   name: 'App',
   computed: {
+    loading () {
+      return this.$store.getters.loading
+    },
     error () {
       // ловим проброс ошибки из user.js
       return this.$store.getters.error

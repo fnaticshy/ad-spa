@@ -1,7 +1,19 @@
 <template>
     <v-container>
 
-        <v-row justify-md="center">
+        <v-row v-if="loading">
+          <v-col class="d-flex justify-center align-center preloader">
+            <v-progress-circular
+              :size="50"
+              color="primary"
+              indeterminate
+            ></v-progress-circular>
+          </v-col>
+        </v-row>
+        <v-row
+          v-else-if="!loading && orders.length !==0"
+          justify-md="center"
+        >
             <v-col cols="12" md="11" >
               <h1 class="text--secondary">Orders</h1>
               <v-list
@@ -41,6 +53,11 @@
               </v-list>
             </v-col>
         </v-row>
+        <v-row v-else>
+          <v-col>
+            <h1 class="text--secondary">You have no orders</h1>
+          </v-col>
+        </v-row>
 
     </v-container>
 </template>
@@ -48,28 +65,37 @@
 <script>
 export default {
   name: 'Orders',
-  data () {
-    return {
-      orders: [
-        {
-          adId: '123e',
-          name: 'Vlas',
-          phone: '9-999-999-99-99',
-          done: false
-        }
-      ]
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    },
+    orders () {
+      return this.$store.getters.orders
     }
   },
   methods: {
     markDone (order) {
-      order.done = true
+      this.$store.dispatch('markOrderDone', order.id)
+        .then(() => {
+          order.done = true
+        })
+        .catch(() => {})
     }
+  },
+  created () {
+    this.$store.dispatch('fetchOrders')
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .list-item-btn {
     z-index: 1;
+  }
+  .preloader {
+    height: calc(100vh - 56px - 24px);
+      @media (min-width: 959px) {
+        height: calc(100vh - 64px - 24px);
+      }
   }
 </style>
