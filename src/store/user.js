@@ -8,12 +8,16 @@ class User {
 
 export default {
   state: {
-    user: null
+    user: null,
+    savedUserId: localStorage.getItem('user')
   },
   mutations: {
     // setters
     setUser (state, payload) {
       state.user = payload
+    },
+    removeSavedUserId (state) {
+      state.savedUserId = null
     }
   },
   actions: {
@@ -24,7 +28,8 @@ export default {
 
       try {
         const user = await fb.auth().createUserWithEmailAndPassword(email, password)
-        commit('setUser', new User(user.uid))
+        localStorage.setItem('user', user.user.uid)
+        commit('setUser', new User(user.user.uid))
         commit('setLoading', false)
       } catch (error) {
         commit('setLoading', false)
@@ -38,7 +43,8 @@ export default {
 
       try {
         const user = await fb.auth().signInWithEmailAndPassword(email, password)
-        commit('setUser', new User(user.uid))
+        localStorage.setItem('user', user.user.uid)
+        commit('setUser', new User(user.user.uid))
         commit('setLoading', false)
       } catch (error) {
         commit('setLoading', false)
@@ -51,13 +57,18 @@ export default {
       commit('setUser', new User(payload.uid))
     },
     logoutUser ({ commit }) {
+      localStorage.removeItem('user')
       fb.auth().signOut()
       commit('setUser', null)
+      commit('removeSavedUserId')
     }
   },
   getters: {
     user (state) {
       return state.user
+    },
+    savedUserId (state) {
+      return state.savedUserId
     },
     isUserLoggedIn (state) {
       return state.user !== null

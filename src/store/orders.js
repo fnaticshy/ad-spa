@@ -37,7 +37,7 @@ export default {
       const resultOrders = []
 
       try {
-        const fbVal = await fb.database().ref(`/users/${getters.user.id}/orders`).once('value')
+        const fbVal = await fb.database().ref(`/users/${getters.savedUserId || getters.user.id}/orders`).once('value')
         // получаем значение из DataSnapshot
         const orders = fbVal.val()
 

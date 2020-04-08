@@ -72,7 +72,7 @@
           text
           tile
           height="100%"
-          v-if="isUserLoggedIn"
+          v-if="savedUserId || isUserLoggedIn"
           @click="onLogout"
         >
           <v-icon left>mdi-logout</v-icon>
@@ -118,7 +118,7 @@ export default {
       return this.$store.getters.isUserLoggedIn
     },
     links () {
-      if (this.isUserLoggedIn) {
+      if (this.savedUserId || this.isUserLoggedIn) {
         return [
           {
             title: 'Orders',
@@ -150,6 +150,9 @@ export default {
           }
         ]
       }
+    },
+    savedUserId () {
+      return this.$store.getters.savedUserId
     }
   },
   methods: {

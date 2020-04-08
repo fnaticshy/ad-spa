@@ -11,10 +11,10 @@
           </v-col>
         </v-row>
         <v-row
-          v-else-if="!loading && orders.length !==0"
+          v-else-if="!loading && orders.length !== 0"
           justify-md="center"
         >
-            <v-col cols="12" md="11" >
+            <v-col cols="12" md="11">
               <h1 class="text--secondary">Orders</h1>
               <v-list
                 two-line
