@@ -1,4 +1,5 @@
 # ad-pwa
+host: https://fns-ads-project.firebaseapp.com/
 ```
 vue + vuetify + firebase
 ```
